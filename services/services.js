@@ -31,5 +31,5 @@ export const getMembers = async (token) => {
 
   const res = await axios(config);
 
-  return res;
+  return res.data;
 };

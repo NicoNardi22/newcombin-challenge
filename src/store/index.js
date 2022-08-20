@@ -1,15 +1,20 @@
+import { getMembers, getToken } from "../../services/services";
+
 import { createStore } from "vuex";
-import { getToken } from "../../services/services";
 
 const store = createStore({
   state() {
     return {
       token: "",
+      members: [],
     };
   },
   mutations: {
     setToken(state, payload) {
       state.token = payload || "";
+    },
+    setMembers(state, payload) {
+      state.members = payload || [];
     },
   },
   actions: {
@@ -19,6 +24,12 @@ const store = createStore({
       token = await getToken();
 
       commit("setToken", token);
+    },
+
+    async getMembersData({ commit }) {
+      let members = await getMembers(this.state.token);
+
+      commit("setMembers", members);
     },
   },
 });
