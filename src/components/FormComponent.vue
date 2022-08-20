@@ -12,6 +12,7 @@ export default {
       lastName: "",
       address: "",
       ssn: "",
+      errors: [],
     };
   },
   methods: {
@@ -21,6 +22,28 @@ export default {
       this.address = "";
       this.ssn = "";
     },
+    checkForm() {
+      this.errors = [];
+
+      if (!this.firstName) {
+        this.errors.push("First name required.");
+      }
+      if (!this.lastName) {
+        this.errors.push("Last name required.");
+      }
+      if (!this.address) {
+        this.errors.push("Address is required.");
+      }
+      if (!this.ssn) {
+        this.errors.push("SSN is required.");
+      } else if (!this.validateSSN(this.ssn)) {
+        this.errors.push("SSN must have the format ###-##-####");
+      }
+    },
+    validateSSN(ssn) {
+      let re = /^(?:[0-9]{3,}-[0-9]{2,}-[0-9]{4,})/;
+      return re.test(ssn);
+    },
   },
 };
 </script>
@@ -28,42 +51,55 @@ export default {
 <template>
   <div class="p-4">
     <div class="border-black border bg-white p-4">
-      <input
-        type="text"
-        id="first-name"
-        :class="[inputClass]"
-        placeholder="First name"
-        v-model="firstName"
-      />
-      <input
-        type="text"
-        id="last-name"
-        :class="[inputClass, `mt-4`]"
-        placeholder="Last name"
-        v-model="lastName"
-      />
-      <input
-        type="text"
-        id="adress"
-        :class="[inputClass, `mt-4`]"
-        placeholder="Adress"
-        v-model="address"
-      />
-      <input
-        type="text"
-        id="ssn"
-        :class="[inputClass, `mt-4`]"
-        placeholder="SSN"
-        v-model="ssn"
-      />
-      <div class="pt-4 grid grid-cols-2">
-        <div class="flex items-center justify-center">
-          <button :class="[resetBtnClass]" @click="resetInputs">Reset</button>
+      <form id="submit-member" @submit.prevent="checkForm">
+        <input
+          type="text"
+          id="first-name"
+          :class="[inputClass]"
+          placeholder="First name"
+          v-model="firstName"
+          required
+        />
+        <input
+          type="text"
+          id="last-name"
+          :class="[inputClass, `mt-4`]"
+          placeholder="Last name"
+          v-model="lastName"
+          required
+        />
+        <input
+          type="text"
+          id="adress"
+          :class="[inputClass, `mt-4`]"
+          placeholder="Adress"
+          v-model="address"
+          required
+        />
+        <input
+          type="text"
+          id="ssn"
+          :class="[inputClass, `mt-4`]"
+          placeholder="SSN"
+          v-model="ssn"
+          required
+        />
+        <div class="pt-4 grid grid-cols-2">
+          <div class="flex items-center justify-center">
+            <button :class="[resetBtnClass]" @click="resetInputs">Reset</button>
+          </div>
+          <div class="flex items-center justify-center">
+            <button :class="[saveBtnClass]" type="submit">Save</button>
+          </div>
         </div>
-        <div class="flex items-center justify-center">
-          <button :class="[saveBtnClass]">Save</button>
-        </div>
-      </div>
+      </form>
+      <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+      </p>
+
+      <ul v-if="errors.length">
+        <li v-for="(error, index) in errors" v-bind:key="index">{{ error }}</li>
+      </ul>
     </div>
   </div>
 </template>
