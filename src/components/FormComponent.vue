@@ -8,7 +8,19 @@ export default {
         "border border-neutral-500 rounded-full h-16 w-16 bg-gray-700 hover:bg-gray-600 text-white",
       saveBtnClass:
         "border border-neutral-500 rounded-full h-16 w-16 bg-green-700 hover:bg-green-600 text-white",
+      firstName: "",
+      lastName: "",
+      address: "",
+      ssn: "",
     };
+  },
+  methods: {
+    resetInputs() {
+      this.firstName = "";
+      this.lastName = "";
+      this.address = "";
+      this.ssn = "";
+    },
   },
 };
 </script>
@@ -21,28 +33,32 @@ export default {
         id="first-name"
         :class="[inputClass]"
         placeholder="First name"
+        v-model="firstName"
       />
       <input
         type="text"
         id="last-name"
         :class="[inputClass, `mt-4`]"
         placeholder="Last name"
+        v-model="lastName"
       />
       <input
         type="text"
         id="adress"
         :class="[inputClass, `mt-4`]"
         placeholder="Adress"
+        v-model="address"
       />
       <input
         type="text"
         id="ssn"
         :class="[inputClass, `mt-4`]"
         placeholder="SSN"
+        v-model="ssn"
       />
       <div class="pt-4 grid grid-cols-2">
         <div class="flex items-center justify-center">
-          <button :class="[resetBtnClass]">Reset</button>
+          <button :class="[resetBtnClass]" @click="resetInputs">Reset</button>
         </div>
         <div class="flex items-center justify-center">
           <button :class="[saveBtnClass]">Save</button>
