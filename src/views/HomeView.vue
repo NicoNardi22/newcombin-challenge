@@ -28,7 +28,7 @@ export default {
   <div class="py-4">
     <h1 class="text-2xl">Welcome! This is the HomeView</h1>
     <div class="grid grid-cols-2 bg-cyan-800 place-items-stretch">
-      <FormComponent />
+      <FormComponent :members="this.members" />
       <TableComponent v-if="members != []" :members="this.members" />
     </div>
   </div>

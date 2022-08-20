@@ -15,6 +15,9 @@ export default {
       errors: [],
     };
   },
+  props: {
+    members: Array,
+  },
   methods: {
     resetInputs() {
       this.firstName = "";
@@ -39,10 +42,21 @@ export default {
       } else if (!this.validateSSN(this.ssn)) {
         this.errors.push("SSN must have the format ###-##-####");
       }
+      if (this.checkDuplicateSSN(this.ssn)) {
+        this.errors.push("SSN is duplicate");
+      }
     },
     validateSSN(ssn) {
       let re = /^(?:[0-9]{3,}-[0-9]{2,}-[0-9]{4,})/;
       return re.test(ssn);
+    },
+    checkDuplicateSSN(ssn) {
+      let result = false;
+      this.members.map((item) => {
+        console.log(item.ssn, ssn, item.ssn === ssn);
+        result = item.ssn === ssn;
+      });
+      return result;
     },
   },
 };
