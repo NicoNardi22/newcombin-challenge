@@ -1,4 +1,5 @@
 <script>
+import { submitMember } from "../../services/services";
 export default {
   data() {
     return {
@@ -41,9 +42,20 @@ export default {
         this.errors.push("SSN is required.");
       } else if (!this.validateSSN(this.ssn)) {
         this.errors.push("SSN must have the format ###-##-####");
-      }
-      if (this.checkDuplicateSSN(this.ssn)) {
+      } else if (this.checkDuplicateSSN(this.ssn)) {
         this.errors.push("SSN is duplicate");
+      }
+
+      if (!this.errors.length) {
+        const data = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          address: this.address,
+          ssn: this.ssn,
+        };
+
+        submitMember(data, this.$store.state.token);
+        this.$store.dispatch("addMember", data);
       }
     },
     validateSSN(ssn) {

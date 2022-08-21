@@ -31,6 +31,12 @@ const store = createStore({
 
       commit("setMembers", members);
     },
+
+    addMember({ commit }, data) {
+      let newMembers = [...this.state.members, data];
+
+      commit("setMembers", newMembers);
+    },
   },
 });
 

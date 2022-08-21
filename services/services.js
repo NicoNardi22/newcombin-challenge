@@ -33,3 +33,16 @@ export const getMembers = async (token) => {
 
   return res.data;
 };
+
+export const submitMember = async (member, token) => {
+  const config = {
+    method: "post",
+    url: "http://localhost:8081/api/members",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: member,
+  };
+
+  await axios(config);
+};
