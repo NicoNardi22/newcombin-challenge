@@ -27,6 +27,7 @@ const store = createStore({
     },
 
     async getMembersData({ commit }) {
+      console.log("updating data members");
       let members = await getMembers(this.state.token);
 
       commit("setMembers", members);
