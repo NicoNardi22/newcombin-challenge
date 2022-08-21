@@ -53,7 +53,6 @@ export default {
     checkDuplicateSSN(ssn) {
       let result = false;
       this.members.map((item) => {
-        console.log(item.ssn, ssn, item.ssn === ssn);
         result = item.ssn === ssn;
       });
       return result;
